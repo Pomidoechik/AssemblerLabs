@@ -4,8 +4,8 @@ model small
 fN dw 0
 sN dw 2
 tN dw 10
-ans db 'S = $'
-mesg1 db 'norma$'
+ans db ' S = $'
+minus db ' - $'
 d db 2
 S db ?
 .code 
@@ -63,23 +63,37 @@ mul al
 mul al
 mul al
 mul al
-mov al, 9
 jmp output
-
-
 
 
 output:
 lea dx, [ans]
 mov ah, 09h
 int 21h
-mov S, al
-mov dx,offset S
+add al, 48 
+cmp al, 48
+jna negative
+mov dl, al 
 mov ah, 02h
 int 21h
 
 
 loop prog
+
+negative:
+lea dx, [minus]
+mov ah, 09h
+int 21
+mov bl, 48
+sub bl, al
+add bl, 48
+mov dl, bl 
+mov ah, 02h
+int 21h
+
+loop prog
+
+
 
 exit:
 mov ax,4c00h 
