@@ -19,13 +19,12 @@ firstExam db 5 dup(' ')
 secondExam db 5 dup(' ')
 thirdExam db 5 dup(' ')
 stud ends
-student <'Serhii $','Romash$','18 years old$','Khmelnitskyi NATIONAL UNIVERSITY $','3$','4$','4$'  >
-expan my<>
-
-       
+student  stud<'Serhii $','Romash$','18 years old$','Khmelnitskyi NATIONAL UNIVERSITY $','3$','4$','4$'  >
+expan stud<>
+      
 .code
 
-ShowMy proc near
+ShowMe proc near
     xor     ax,ax
     xor     bx,bx
     xor     si,si
@@ -37,35 +36,49 @@ ShowMy proc near
     int     21h
 
     mov     ah,09h
-    lea     dx, mes0
+    lea     dx,mes0
     int     21h
     lea     dx, student.name[bx]
     int     21h
     
-    mov     ah,09h
+    lea     dx,mes1
+    int     21h
     lea     dx, student.surname[bx]
     int     21h
     
-    mov     ah,09h
+    lea     dx,mes2
+    int     21h
     lea     dx, student.Age[bx]
     int     21h
     
+    lea     dx,mes3
+    int     21h
+    lea     dx, student.university[bx]
+    int     21h
+    
+    lea     dx,mes4
+    int     21h
+    lea     dx, student.firstExam[bx]
+    int     21h
 
+    lea     dx,mes5
+    int     21h
+    lea     dx, student.secondExam[bx]
+    int     21h
+    
+    lea     dx,mes6
+    int     21h
+    lea     dx, student.thirdExam[bx]
+    int     21h
 
 ret
 endp    
 main:
     mov ax,@data
     mov ds,ax
-    call ShowMy 
+    call ShowMe 
       
 exit:
     mov ax,4c00h
     int 21h
-    
-
-message:
-   mov   ah,9
-   int   21h
-ret
     end main
